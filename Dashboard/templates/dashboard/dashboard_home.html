@@ -1,16 +1,14 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Aters</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="">
-    </head>
-    <body>
-        <h1>Aters</h1>
-        
-        <script src="" async defer></script>
-    </body>
-</html>
+{% extends 'dashboard/base.html' %}
+{% load static %}
+
+{% block title %}
+    Aters
+{% endblock title %}
+
+{% block content %}
+    <h1> Aters </h1>
+    
+    <a href="{% url 'user_signup' %}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Sign Up</a>
+    <a href="{% url 'user_login' %}" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">Login</a>
+    {% comment %} <a href="{% url 'restaurant' %}" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">Restaurant</a> {% endcomment %}
+{% endblock content %}

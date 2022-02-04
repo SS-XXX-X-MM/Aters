@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        {% block title %}
+
+        {% endblock title %}
+    </title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.0/normalize.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css">
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/pixeden-stroke-7-icon@1.2.3/pe-icon-7-stroke/dist/pe-icon-7-stroke.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.0/css/flag-icon.min.css">
+    <link rel="stylesheet" href="{% static 'css/cs-skin-elastic.css' %}">
+
+    {% block css %}
+
+    {% endblock css %}
+
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css"/>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+   <script src="{% static 'js/vuejs.js' %}"></script>
+</head>
+
+<body>
+
+    {% block content %}
+
+    {% endblock content %}
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.4/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"></script>
+    <!-- alertify JavaScript -->
+    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+
+    <!-- starting alertify settings -->
+    <script>
+        alertify.defaults = {
+            // dialogs defaults
+            autoReset: true,
+            basic: false,
+            closable: true,
+            closableByDimmer: true,
+            invokeOnCloseOff: false,
+            frameless: false,
+            defaultFocusOff: false,
+            maintainFocus: true, // <== global default not per instance, applies to all dialogs
+            maximizable: true,
+            modal: true,
+            movable: true,
+            moveBounded: false,
+            overflow: true,
+            padding: true,
+            pinnable: true,
+            pinned: true,
+            preventBodyShift: false, // <== global default not per instance, applies to all dialogs
+            resizable: true,
+            startMaximized: false,
+            transition: 'pulse',
+            transitionOff: false,
+            tabbable: 'button:not(:disabled):not(.ajs-reset),[href]:not(:disabled):not(.ajs-reset),input:not(:disabled):not(.ajs-reset),select:not(:disabled):not(.ajs-reset),textarea:not(:disabled):not(.ajs-reset),[tabindex]:not([tabindex^="-"]):not(:disabled):not(.ajs-reset)',  // <== global default not per instance, applies to all dialogs
+
+            // notifier defaults
+            notifier: {
+                // auto-dismiss wait time (in seconds)  
+                delay: 30,
+                // default position
+                position: 'top-right',
+                // adds a close button to notifier messages
+                closeButton: true,
+                // provides the ability to rename notifier classes
+                classes: {
+                    base: 'alertify-notifier',
+                    prefix: 'ajs-',
+                    message: 'ajs-message',
+                    top: 'ajs-top',
+                    right: 'ajs-right',
+                    bottom: 'ajs-bottom',
+                    left: 'ajs-left',
+                    center: 'ajs-center',
+                    visible: 'ajs-visible',
+                    hidden: 'ajs-hidden',
+                    close: 'ajs-close'
+                }
+            },
+
+            // language resources 
+            glossary: {
+                // dialogs default title
+                title: 'Lawful Alert!',
+                // ok button text
+                ok: 'OK',
+                // cancel button text
+                cancel: 'Cancel'
+            },
+
+            // theme settings
+            theme: {
+                // class name attached to prompt dialog input textbox.
+                input: 'ajs-input',
+                // class name attached to ok button
+                ok: 'ajs-ok btn btn-sm btn-success',
+                // class name attached to cancel button 
+                cancel: 'ajs-cancel btn btn-sm btn-danger'
+            },
+            // global hooks
+            hooks: {
+                // invoked before initializing any dialog
+                preinit: function (instance) { },
+                // invoked after initializing any dialog
+                postinit: function (instance) { },
+            },
+        };
+    </script>
+    <!-- ending alertify settings -->
+
+
+    <!-- notifier for django messages -->
+    {% if messages %}
+    {% for message in messages %}
+    {% if message.tags == 'error' %}
+    <script>
+        alertify.error('{{message}}');
+    </script>
+    {% else %}
+    <script>
+        alertify.success('{{message}}');
+    </script>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+
+    <!-- notifier of django messages -->
+    {% if form.errors %}
+    {% for field in form %}
+    {% for error in field.errors %}
+    <script>
+        alertify.error('{{ error }}')
+    </script>
+    {% endfor %}
+    {% endfor %}
+    {% endif %}
+
+
+
+    {% if form.non_field_errors %}
+    {% for error in form.non_field_errors %}
+    <script>
+        alertify.error('{{ error }}')
+    </script>
+    {% endfor %}
+    {% endif %}
+
+
+
+    {% block script %}
+
+    {% endblock script %}
+   
+    <script src="{% static 'js/main.js' %}"></script>
+    <!-- starting code to show the name of uploaded file -->
+<script>
+    // Add the following code if you want the name of the file appear on select
+    $(".custom-file-input").on("change", function() {
+      var fileName = $(this).val().split("\\").pop();
+      $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+    });
+    </script>
+<!-- ending code to show the name of the uploaded file -->
+
+<!-- starting code for enabling tool tip -->
+<script>
+$(document).ready(function(){
+    $(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+});
+
+
+// $('#waitDisBtn').click(function(){
+// $(this).attr('disabled','disabled');
+// $(this).html('<span class="spinner-grow spinner-grow-sm"></span>Please Wait..')
+// })
+
+})
+</script>
+<!-- ending code for enabling tool tip -->
+
+
+</body>
+
+</html>
