@@ -7,10 +7,11 @@
 
 <form method="POST">
     {% csrf_token %}
+    
     <div class="mb-3">
       <label for="exampleInputEmail1" class="form-label">Email</label>
       <input type="email" class="form-control form-control-sm" id="exampleInputEmail1"
-        aria-describedby="emailHelp" placeholder="Email" name="username" required>
+        aria-describedby="emailHelp" placeholder="Email" name="email" required>
     </div>
 
     <div class="mb-3">
@@ -23,7 +24,7 @@
       <a href="#">Forgot Password?</a>
     </label>
 
-    <button type="submit" disabled class="btn btn-sm btn-success" id="loginbtn"><i class="fa fa-sign-in"></i> Login</button>
+    <button type="submit" class="btn btn-sm btn-success" id="loginbtn"><i class="fa fa-sign-in"></i> Login</button>
    
   </form>
 

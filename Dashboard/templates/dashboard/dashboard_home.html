@@ -7,7 +7,9 @@
 
 {% block content %}
     <h1> Aters </h1>
-    
+    {% if user.is_authenticated %}
+        <h1>{{ user.email }}
+    {% endif %}
     <a href="{% url 'user_signup' %}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Sign Up</a>
     <a href="{% url 'user_login' %}" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">Login</a>
     {% comment %} <a href="{% url 'restaurant' %}" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">Restaurant</a> {% endcomment %}
