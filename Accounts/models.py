@@ -6,6 +6,8 @@ from .managers import CustomUserManager
 # Create your models here.
 
 class CustomUser(AbstractUser):
+    first_name = None
+    last_name = None
     username = None
     email = models.EmailField(_('email address'), unique=True)
     mobile = models.CharField(max_length=13)
@@ -20,6 +22,17 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return self.email
+
+
+class Address(models.Model):
+    street = models.TextField()
+    locality = models.TextField(null=True, blank=True)
+    city = models.CharField(max_length=100)
+    state = models.CharField(max_length= 100, null=True, blank=True)
+    pincode = models.CharField(max_length=6)
+
+    def __str__(self):
+        return f'{self.city} - {self.pincode}'
 
 
     

@@ -23,6 +23,7 @@ urlpatterns = [
     # path('', RedirectView.as_view(url="home/")),
     path('', include('Dashboard.urls')),
     path('user/', include('Users.urls')),
+    path('restaurant/', include('Restaurants.urls')),
     path('admin/', admin.site.urls),
 ]
 

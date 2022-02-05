@@ -1,13 +1,10 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
 from Accounts.models import CustomUser
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
-class UserCreationForm(forms.Form):
-   # first_name = forms.CharField(strip=True)
-   # last_name = forms.CharField(strip=True)
+class RestaurantCreationForm(forms.Form):
    email = forms.EmailField()
    mobile = forms.CharField(max_length=13)
    password = forms.CharField(strip=True)
@@ -32,4 +29,3 @@ class UserCreationForm(forms.Form):
 
       if password != confirm_password:
          raise forms.ValidationError("Passwords don't match!")
-
