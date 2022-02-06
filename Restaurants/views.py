@@ -5,7 +5,7 @@ from django.views.generic import View
 from .forms import RestaurantCreationForm
 from django.contrib.auth import get_user_model
 from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout as django_logout
 
 User = get_user_model()
 
@@ -29,8 +29,12 @@ class RestaurantSignupView(View):
             user = User.objects.create_user(
                 email = form.cleaned_data['email'],
                 password = form.cleaned_data['password'],
-                mobile = form.cleaned_data['mobile']
+                mobile = form.cleaned_data['mobile'],
+                is_active = True,  # Do this by sending mail
+                is_restaurant = True,
+                is_user = False
             )
+            
             user.save()
             messages.info(request, 'Account created successfully!')
             return redirect('restaurant_login')
@@ -57,10 +61,17 @@ class RestaurantLoginView(View):
             return redirect('restaurant_login')
         # password = make_password(password)
         user = authenticate(request, email=email, password=password)
-        if user is not None:
+        if user is not None and user.is_restaurant:
             login(request, user)
             messages.info(request, 'Logged In')
             return redirect('restaurant_home')
         else:
             messages.error(request, 'Incorrect Username or Password!')
             return redirect('restaurant_login')
+
+
+def logout(request):
+    '''function to handle logout request'''
+    messages.success(request,'Logged out successfully!')
+    django_logout(request)
+    return redirect('restaurant_home')

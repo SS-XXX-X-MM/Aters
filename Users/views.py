@@ -4,7 +4,7 @@ from .forms import UserCreationForm
 from django.contrib.auth import get_user_model
 from django.contrib import messages
 # from django_email_verification import send_email
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout as django_logout
 from django.contrib.auth.hashers import make_password
 
 User = get_user_model()
@@ -22,9 +22,8 @@ class UserSignUpView(View):
             user = User.objects.create_user(
                 email = form.cleaned_data['email'],
                 password = form.cleaned_data['password'],
-                # first_name = form.cleaned_data['first_name'],
-                # last_name = form.cleaned_data['last_name'],
-                mobile = form.cleaned_data['mobile']
+                mobile = form.cleaned_data['mobile'],
+                is_active = True  # Do this by sending mail
             )
 
             user.save()
@@ -54,10 +53,17 @@ class UserLoginView(View):
             return redirect('user_login')
         # password = make_password(password)
         user = authenticate(request, email=email, password=password)
-        if user is not None:
+        if user is not None and user.is_user:
             login(request, user)
             messages.info(request, 'Logged In')
             return redirect('dashboard_home')
         else:
             messages.error(request, 'Incorrect Username or Password!')
             return redirect('user_login')
+
+
+def logout(request):
+    '''function to handle logout request'''
+    messages.success(request,'Logged out successfully!')
+    django_logout(request)
+    return redirect('dashboard_home')
