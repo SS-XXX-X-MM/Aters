@@ -10,7 +10,7 @@ class CustomUser(AbstractUser):
     last_name = None
     username = None
     email = models.EmailField(_('email address'), unique=True)
-    mobile = models.CharField(max_length=13)
+    mobile = models.CharField(max_length=13, unique=True)
     is_active = models.BooleanField(_('active'), default=False, help_text=_('Designates whether this user should be treated as active.'))
     is_user = models.BooleanField(default=True)
     is_restaurant = models.BooleanField(default=False)

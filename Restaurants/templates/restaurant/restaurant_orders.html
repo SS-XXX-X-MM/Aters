@@ -1,0 +1,41 @@
+{% extends 'dashboard/base.html' %}
+
+
+{% block title %} Orders {% endblock title %}
+
+{% block content %}
+
+<h1>Orders</h1>
+
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Customer Name</th>
+        <th scope="col">Food Name</th>
+        <th scope="col">Price(INR)</th>
+        <th scope="col">Address</th>
+      </tr>
+    </thead>
+    <tbody>
+
+    {% for order in orders %}
+      <tr>
+        <th scope="row"> {{forloop.counter}} </th>
+        <td> {{order.customer}} </td>
+        <td>{{order.menu_food_item.food_name}}</td>
+        <td>{{order.menu_food_price}}</td>
+        {% if order.temp_address %}
+            <td>{{order.temp_address }}</td>
+        {% else %}
+            <td>{{order.customer.address.street}}, {{order.customer.address.locality}}, {{order.customer.address.city}}, {{order.customer.address.pincode}}</td>
+        {% endif %}
+      </tr>
+      {% endfor %}
+
+    </tbody>
+  </table>
+
+
+
+{% endblock content %}

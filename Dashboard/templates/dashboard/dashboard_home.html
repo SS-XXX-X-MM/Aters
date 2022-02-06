@@ -7,14 +7,43 @@
 
 {% block content %}
     <h1> Aters </h1>
-    <div>
-    <a href="{% url 'user_signup' %}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Sign Up</a>
-    <a href="{% url 'user_login' %}" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">Login</a>
-    <a href="{% url 'restaurant_home' %}" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">Restaurant</a>
-    </div>
-    
+
     {% if user.is_authenticated %}
         <h1>{{ user.email }}</h1>
         <a href="{% url 'user_logout' %}" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">Logout</a>
+        <a href="{% url 'user_profile' %}" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">Profile</a>
+
+        <h1>List of Restaurant in your city</h1>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Rating</th>
+                <th scope="col">Address</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            {% for restaurant in restaurants %}
+            <tr>
+                <th scope="row"> {{forloop.counter}} </th>
+                <td> {{restaurant.name}} </td>
+                <td>{{restaurant.rating}}</td>
+                <td>{{restaurant.address.street}}, {{restaurant.address.locality}}</td>
+                <a href="{% url 'user_order' %}" class="btn btn-primary btn-sm active" role="button" aria-pressed="true">Order</a>
+            </tr>
+            {% endfor %}
+
+            </tbody>
+        </table>
+
+    {% else %}
+        <div>
+            <a href="{% url 'user_signup' %}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Sign Up</a>
+            <a href="{% url 'user_login' %}" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">Login</a>
+            <a href="{% url 'restaurant_home' %}" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">Restaurant</a>
+        </div>
     {% endif %}
 {% endblock content %}

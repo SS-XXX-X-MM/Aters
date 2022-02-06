@@ -23,15 +23,14 @@ class Menu(models.Model):
     # menu_item_price = models.IntegerField() # -- menu specific price +
 
     def __str__(self):
-        return f'{self.restaurant.name} menu'
+        return "menu"
     
 
 class RestaurantProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='restaurant_profile')
     name = models.CharField(max_length=100)
     started_on = models.DateField()
     logo = models.ImageField(default="restaurant_logo/default-restaurant-logo.jpg", upload_to="restaurant_logo/")
-    address = models.ForeignKey(Address, on_delete=models.CASCADE)
     speciality = models.CharField(max_length=100, choices=spec_choice, null=True, blank=True)
     address = models.ForeignKey(Address, on_delete=models.CASCADE)
     rating = models.DecimalField(max_digits=2, decimal_places=1)

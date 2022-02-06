@@ -6,6 +6,8 @@ from .forms import RestaurantCreationForm
 from django.contrib.auth import get_user_model
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout as django_logout
+from .models import *
+from Users.models import OrderCart
 
 User = get_user_model()
 
@@ -75,3 +77,38 @@ def logout(request):
     messages.success(request,'Logged out successfully!')
     django_logout(request)
     return redirect('restaurant_home')
+
+
+class RestaurantMenuView(View):
+    template = 'restaurant/restaurant_menu.html'
+
+    def get(self, request, *args, **kwargs):
+        user = RestaurantProfile.objects.get(user=request.user)
+        menu = user.menu.menu_item.all()
+        context = {
+            'menu':menu
+        }
+
+        return render(request, self.template, context)
+
+
+
+    def post(self, request, *args, **kwargs):
+        pass
+
+
+class RestaurantOrdersView(View):
+    template = 'restaurant/restaurant_orders.html'
+    
+    def get(self, request, *args, **kwargs):
+        user = RestaurantProfile.objects.get(user=request.user)
+        orders = OrderCart.objects.filter(restaurant=user)
+        context = {
+            'orders':orders
+        }
+
+        return render(request, self.template, context)
+
+
+    def post(self, request, *args, **kwargs):
+        pass

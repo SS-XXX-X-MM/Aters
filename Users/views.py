@@ -67,3 +67,15 @@ def logout(request):
     messages.success(request,'Logged out successfully!')
     django_logout(request)
     return redirect('dashboard_home')
+
+
+class UserProfileView(View):
+    
+    def get(self, request, *args, **kwargs):
+        pass
+
+
+class UserOrderView(View):
+    
+    def get(self, request, *args, **kwargs):
+        pass

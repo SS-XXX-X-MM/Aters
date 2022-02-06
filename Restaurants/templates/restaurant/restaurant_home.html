@@ -7,14 +7,18 @@
 
 {% block content %}
     <h1> Aters Restaurant</h1>
-    <div>
-    <a href="{% url 'restaurant_signup' %}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Sign Up</a>
-    <a href="{% url 'restaurant_login' %}" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">Login</a>
     <a href="{% url 'dashboard_home' %}" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">Home</a>
-    </div>
-    
+
     {% if user.is_authenticated %}
         <h1>{{ user.email }}
         <a href="{% url 'restaurant_logout' %}" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">Logout</a>
+        <a href="{% url 'restaurant_orders' %}" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">Orders</a>
+        <a href="{% url 'restaurant_menu' %}" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">Menu</a>
+
+    {% else %}
+        <div>
+            <a href="{% url 'restaurant_signup' %}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Sign Up</a>
+            <a href="{% url 'restaurant_login' %}" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">Login</a>
+        </div>
     {% endif %}
 {% endblock content %}

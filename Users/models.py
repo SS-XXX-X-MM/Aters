@@ -10,7 +10,7 @@ gen_choices = (
     ("X", "Others")
 )
 class UserProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='userprofile')
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100, null=True, blank=True)
     gender = models.CharField(max_length=100, choices=gen_choices)
@@ -22,12 +22,13 @@ class UserProfile(models.Model):
         return self.first_name + ' ' + self.last_name
 
 class OrderCart(models.Model):
-    customer = models.OneToOneField(UserProfile, on_delete=models.CASCADE)
-    restaurant = models.OneToOneField(RestaurantProfile, on_delete=models.CASCADE)
-    menu_food_item = models.OneToOneField(FoodItem, on_delete=models.CASCADE)
+    customer = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+    restaurant = models.ForeignKey(RestaurantProfile, on_delete=models.CASCADE)
+    menu_food_item = models.ForeignKey(FoodItem, on_delete=models.CASCADE)
     menu_food_price = models.IntegerField()
     temp_address = models.TextField(null=True, blank=True)
-
+    ordered_at = models.DateTimeField(auto_now_add=True)
+    
     def __str__(self):
         return self.customer.first_name + ' - ' + self.restaurant.name
 
