@@ -18,11 +18,17 @@ class UserProfile(models.Model):
     profile_picture = models.ImageField(default="user_profile_pictures/default-profile-picture.jpg", upload_to="user_profile_pictures/")
     address = models.ForeignKey(Address, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.first_name + ' ' + self.last_name
+
 class OrderCart(models.Model):
     customer = models.OneToOneField(UserProfile, on_delete=models.CASCADE)
     restaurant = models.OneToOneField(RestaurantProfile, on_delete=models.CASCADE)
     menu_food_item = models.OneToOneField(FoodItem, on_delete=models.CASCADE)
     menu_food_price = models.IntegerField()
     temp_address = models.TextField(null=True, blank=True)
+
+    def __str__(self):
+        return self.customer.first_name + ' - ' + self.restaurant.name
 
 

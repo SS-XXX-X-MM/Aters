@@ -25,8 +25,8 @@ class CustomUser(AbstractUser):
 
 
 class Address(models.Model):
-    street = models.TextField()
-    locality = models.TextField(null=True, blank=True)
+    street = models.CharField(max_length=100)
+    locality = models.CharField(max_length=100, null=True, blank=True)
     city = models.CharField(max_length=100)
     state = models.CharField(max_length= 100, null=True, blank=True)
     pincode = models.CharField(max_length=6)
