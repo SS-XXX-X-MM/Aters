@@ -1,0 +1,39 @@
+{% extends 'dashboard/base.html' %}
+
+{% block title %} My Cart {% endblock title %}
+
+{% block content %}
+
+<a href="{% url 'dashboard_home' %}" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">Home</a>
+
+<h1> My Cart </h1>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">Ordered From</th>
+        <th scope="col">Name</th>
+        <th scope="col">Price(INR)</th>
+        <th scope="col">Status</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    {% for order in orders %}
+    <tr>
+        <th scope="row"> {{forloop.counter}} </th>
+        <td> {{order.restaurant.name}} </td>
+        <td>{{order.menu_food_item}}</td>
+        <td>{{order.menu_food_price}}</td>
+        <td>On it's way</td>
+    </tr>
+    {% endfor %}
+
+    </tbody>
+</table>
+
+<h5>Total: {{total}}</h5>
+
+
+{% endblock content %}

@@ -1,14 +1,14 @@
 from django.shortcuts import redirect, render
 from django.views.generic import View
 
-from Users.models import OrderCart
-from .forms import UserCreationForm
+from .models import OrderCart, UserProfile
+from .forms import UserCreationForm, UserProfileForm
 from django.contrib.auth import get_user_model
 from django.contrib import messages
 # from django_email_verification import send_email
 from django.contrib.auth import authenticate, login, logout as django_logout
-from django.contrib.auth.hashers import make_password
 from Restaurants.models import FoodItem, RestaurantProfile
+from Accounts.models import Address
 
 User = get_user_model()
 
@@ -73,9 +73,55 @@ def logout(request):
 
 
 class UserProfileView(View):
-    
+    template = 'users/user_profile.html'
+    form_class = UserProfileForm
+
     def get(self, request, *args, **kwargs):
-        pass
+        try:
+            User = request.user.userprofile
+            context = {'User':User}
+        except:
+            context = {}
+        return render(request, self.template, context)
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST, request.FILES)
+        if form.is_valid():
+            street = form.cleaned_data.get('street')
+            locality =  form.cleaned_data['locality']
+            city = form.cleaned_data['city']
+            state =  form.cleaned_data['state']
+            pincode =  form.cleaned_data['pincode']
+            first_name = form.cleaned_data['first_name']
+            last_name = form.cleaned_data['last_name']
+            gender = form.cleaned_data['gender']
+            dob = form.cleaned_data['dob']
+            pp = form.cleaned_data['profile_picture']
+
+            try:
+                user = request.user.userprofile
+                addr = user.address
+                addr.street=street
+                addr.locality=locality
+                addr.city=city
+                addr.state=state
+                addr.pincode=pincode
+                addr.save()
+                user.first_name=first_name
+                user.last_name=last_name
+                user.gender=gender
+                user.dob=dob
+                user.profile_picture=pp
+                user.address=addr
+                user.save()
+            except:
+                addr = Address.objects.create(street=street, locality=locality, city=city, state=state, pincode=pincode)
+                newuser = UserProfile.objects.create(user=request.user, first_name=first_name, last_name=last_name, gender=gender, dob=dob, profile_picture=pp, address=addr)
+
+            messages.success(request, "Profile Created Successfully!")
+        else:
+            messages.error(request, "Incorrect data")
+        return redirect('dashboard_home')
 
 
 class UserOrderView(View):
@@ -104,5 +150,21 @@ class UserOrderView(View):
         messages.success(request, "Added to Cart!")
         print(request.path)
         return redirect('dashboard_home')
+
+
+class UserCartView(View):
+    template = 'users/user_cart.html'
+
+    def get(self, request, *args, **kwargs):
+        User = request.user.userprofile
+        orders = OrderCart.objects.filter(customer=User)
+        total = 0
+        for order in orders:
+            total += order.menu_food_price
+        context = {
+            "orders":orders,
+            "total":total
+        }
+        return render(request, self.template, context)
 
         

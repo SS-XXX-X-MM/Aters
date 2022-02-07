@@ -1,0 +1,72 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+
+
+{% block title %} User Profile {% endblock title %}
+
+{% block content %}
+
+<div class="Signup-form">
+    <h6 class="pb-2  text-center">Update Your profile</h6>
+
+    <form method="POST" enctype='multipart/form-data'>
+        {% csrf_token %}
+
+        {% comment %} <input type="text" name='exist' value="{{exist}}" hidden> {% endcomment %}
+
+        <div class="form-group">
+            <label for="first_name">First Name</label>
+            <input type="text" name="first_name" id='first_name' class="form-control form-control-sm" placeholder="Enter First Name" value="{{ User.first_name }}" required>
+        </div>
+
+        <div class="form-group">
+            <label for='last_name'>Last Name</label>
+            <input type="text" required name="last_name" id='last_name' class="form-control form-control-sm" placeholder="Enter Last Name" value="{{ User.last_name }}">
+        </div>
+
+        <div class="form-group">
+            <label for='gender'>Gender</label>
+            <select name='gender' id='gender'>
+                <option value="M">Male</option>
+                <option value="F">Female</option>
+                <option value="X">Others</option>
+        </div>
+
+        <div class="form-group">
+            <label for='dob'>Date Of Birth</label>
+            <input type="date" required name="dob" class="form-control form-control-sm" id='dob' placeholder="Enter DOB" value="{{ User.dob }}">
+        </div>
+
+        <div class="form-group">
+            <label for='pp'>Profile Picture</label>
+            <input type="file" name="profile_picture" class="form-control form-control-sm" id='pp' accept="image/png, image/jpeg, image/jpg" value='{{User.profile_picture}}'>
+        </div>
+
+        <div class="form-group">
+            <label>Street</label>
+            <input type="text" class="form-control form-control-sm" placeholder="street" name="street" value="{{ User.address.street }}">
+        </div>
+        <div class="form-group">
+            <label>locality</label>
+            <input type="text" class="form-control form-control-sm" placeholder="locality" name="locality" value="{{ User.address.locality }}">
+        </div>
+        <div class="form-group">
+            <label>city</label>
+            <input type="text" class="form-control form-control-sm" placeholder="city" name="city" value="{{ User.address.city }}" required>
+        </div>
+        <div class="form-group">
+            <label>state</label>
+            <input type="text" class="form-control form-control-sm" placeholder="state" name="state" value="{{ User.address.state }}" required>
+        </div>
+        <div class="form-group">
+            <label>pincode</label>
+            <input type="text" class="form-control form-control-sm" placeholder="pincode" name="pincode" value="{{ User.address.pincode }}" required>
+        </div>
+       
+      
+        <button type="submit" class="btn btn-sm btn-success btn-flat m-b-30 m-t-30">Submit</button>
+   
+    </form>
+</div>
+
+{% endblock content %}

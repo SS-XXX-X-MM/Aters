@@ -1,9 +1,14 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from Accounts.models import CustomUser
 from django.contrib.auth import get_user_model
 
+
 User = get_user_model()
+gen_choices = (
+    ("M", "Male"),
+    ("F", "Female"),
+    ("X", "Others")
+)
 
 class UserCreationForm(forms.Form):
    # first_name = forms.CharField(strip=True)
@@ -32,4 +37,17 @@ class UserCreationForm(forms.Form):
 
       if password != confirm_password:
          raise forms.ValidationError("Passwords don't match!")
+
+
+class UserProfileForm(forms.Form):
+   first_name = forms.CharField(max_length=100)
+   last_name = forms.CharField(max_length=100)
+   gender = forms.ChoiceField(choices=gen_choices)
+   dob = forms.DateField()
+   profile_picture = forms.ImageField()
+   street = forms.CharField(max_length=100)
+   locality = forms.CharField()
+   city = forms.CharField()
+   state = forms.CharField()
+   pincode = forms.CharField()
 
