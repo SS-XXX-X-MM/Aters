@@ -32,7 +32,7 @@
                 <td> {{restaurant.name}} </td>
                 <td>{{restaurant.rating}}</td>
                 <td>{{restaurant.address.street}}, {{restaurant.address.locality}}</td>
-                <a href="{% url 'user_order' %}" class="btn btn-primary btn-sm active" role="button" aria-pressed="true">Order</a>
+                <td><a href="{% url 'user_order' id=restaurant.id %}" class="btn btn-primary btn-sm active" role="button" aria-pressed="true">Order</a></td>
             </tr>
             {% endfor %}
 

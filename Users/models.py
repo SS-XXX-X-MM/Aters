@@ -28,8 +28,9 @@ class OrderCart(models.Model):
     menu_food_price = models.IntegerField()
     temp_address = models.TextField(null=True, blank=True)
     ordered_at = models.DateTimeField(auto_now_add=True)
+    # quantity = models.SmallIntegerField()
     
     def __str__(self):
-        return self.customer.first_name + ' - ' + self.restaurant.name
+        return f'{self.customer.first_name}-{self.menu_food_item.food_name}-{self.restaurant.name}'
 
 

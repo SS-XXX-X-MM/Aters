@@ -1,11 +1,14 @@
 from django.shortcuts import redirect, render
 from django.views.generic import View
+
+from Users.models import OrderCart
 from .forms import UserCreationForm
 from django.contrib.auth import get_user_model
 from django.contrib import messages
 # from django_email_verification import send_email
 from django.contrib.auth import authenticate, login, logout as django_logout
 from django.contrib.auth.hashers import make_password
+from Restaurants.models import FoodItem, RestaurantProfile
 
 User = get_user_model()
 
@@ -76,6 +79,30 @@ class UserProfileView(View):
 
 
 class UserOrderView(View):
-    
-    def get(self, request, *args, **kwargs):
-        pass
+    template = 'users/user_order.html'
+    def get(self, request, id, *args, **kwargs):
+        restaurant = RestaurantProfile.objects.get(id=id)
+        menu = restaurant.menu.menu_item.all()
+        context = {
+            'id':id,
+            'menu':menu
+        }
+        return render(request, self.template, context)
+
+    def post(self, request, *args, **kwargs):
+        print()
+        restaurant = RestaurantProfile.objects.get(id=request.POST['restaurant_id']) 
+        food_item = FoodItem.objects.get(id=request.POST['food_id']) 
+        food_price = request.POST['food_price']
+        customer = request.user.userprofile
+        # quantity = request.POST['qty']
+        print(food_item)
+        print(request.POST['food_id'])
+
+        order = OrderCart(customer=customer, restaurant=restaurant, menu_food_item=food_item, menu_food_price=food_price)
+        order.save()
+        messages.success(request, "Added to Cart!")
+        print(request.path)
+        return redirect('dashboard_home')
+
+        

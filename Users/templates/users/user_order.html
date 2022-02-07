@@ -1,0 +1,42 @@
+{% extends 'dashboard/base.html' %}
+
+{% block title %} Order {% endblock title %}
+
+{% block content %}
+
+<h1> Order </h1>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Type</th>
+        <th scope="col">Price(INR)</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    {% for item in menu %}
+    <tr>
+        <th scope="row"> {{forloop.counter}} </th>
+        <td> {{item.food_name}} </td>
+        <td>{{item.food_type}}</td>
+        <td>{{item.food_price}}</td>
+        <td>
+        <form method='POST'>
+            {% csrf_token %}
+            <input type='text' name='restaurant_id' value={{id}} hidden>
+            <input type='text' name='food_id' value={{item.id}} hidden>
+            <input type='text' name='food_price' value={{item.food_price}} hidden>
+            <button type="submit" class="btn btn-sm btn-success">ADD</button>
+        </form>         
+        </td>
+    </tr>
+    {% endfor %}
+
+    </tbody>
+</table>
+
+
+{% endblock content %}
