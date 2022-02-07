@@ -9,6 +9,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout as django_logout
 from Restaurants.models import FoodItem, RestaurantProfile
 from Accounts.models import Address
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 User = get_user_model()
 
@@ -72,7 +73,7 @@ def logout(request):
     return redirect('dashboard_home')
 
 
-class UserProfileView(View):
+class UserProfileView(LoginRequiredMixin, View):
     template = 'users/user_profile.html'
     form_class = UserProfileForm
 
@@ -124,7 +125,7 @@ class UserProfileView(View):
         return redirect('dashboard_home')
 
 
-class UserOrderView(View):
+class UserOrderView(LoginRequiredMixin, View):
     template = 'users/user_order.html'
     def get(self, request, id, *args, **kwargs):
         restaurant = RestaurantProfile.objects.get(id=id)
@@ -152,7 +153,7 @@ class UserOrderView(View):
         return redirect('dashboard_home')
 
 
-class UserCartView(View):
+class UserCartView(LoginRequiredMixin, View):
     template = 'users/user_cart.html'
 
     def get(self, request, *args, **kwargs):
