@@ -102,11 +102,15 @@ class RestaurantOrdersView(LoginRequiredMixin, View):
         try:
             user = RestaurantProfile.objects.get(user=request.user)
             orders = OrderCart.objects.filter(restaurant=user)
+            total = 0
+            for order in orders:
+                total += order.menu_food_price
             context = {
-                'orders':orders
+                'orders':orders,
+                'total':total
             }
         except:
-            context={}              #no orders or update your profile
+            context={'total':0}              #no orders or update your profile
         return render(request, self.template, context)
 
 

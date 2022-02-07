@@ -9,11 +9,11 @@
     <h1> Aters Restaurant</h1>
 
     {% if user.is_authenticated %}
-        <h1>{{ user.email }}
+        <h3>User: {{ user.email }} </h3>
         <a href="{% url 'restaurant_logout' %}" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">Logout</a>
-        <a href="{% url 'restaurant_profile' %}" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">Profile</a>
-        <a href="{% url 'restaurant_orders' %}" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">Orders</a>
-        <a href="{% url 'restaurant_menu' %}" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">Menu</a>
+        <a href="{% url 'restaurant_profile' %}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Profile</a>
+        <a href="{% url 'restaurant_orders' %}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Orders</a>
+        <a href="{% url 'restaurant_menu' %}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Menu</a>
 
     {% else %}
         <div>
