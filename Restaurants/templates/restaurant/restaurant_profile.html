@@ -1,0 +1,70 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+
+
+{% block title %} Restaurant Profile {% endblock title %}
+
+{% block content %}
+
+<div class="Signup-form">
+    <h6 class="pb-2  text-center">Update Your profile</h6>
+
+    <form method="POST" enctype='multipart/form-data'>
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label for="first_name">Restaurant Name</label>
+            <input type="text" name="name" id='first_name' class="form-control form-control-sm" placeholder="Enter Restaurant Name" value="{{ User.name }}" required>
+        </div>
+
+        <div class="form-group">
+            <label for='last_name'>Started On</label>
+            <input type="date" required name="started_on" id='last_name' class="form-control form-control-sm" placeholder="Started on" value="{{ User.started_on }}">
+        </div>
+
+        <div class="form-group">
+            <label for='gender'>Speciality</label>
+            <select name='speciality' id='gender'>
+                <option value="indian">Indian</option>
+                <option value="chinese">Chinese</option>
+                <option value="deserts">Deserts</option>
+        </div>
+
+        <div class="form-group">
+            <label for='pp'>logo</label>
+            <input type="file" name="logo" class="form-control form-control-sm" id='pp' accept="image/png, image/jpeg, image/jpg" value="{{User.logo}}">
+        </div>
+
+        <div class="form-group">
+            <label>Street</label>
+            <input type="text" class="form-control form-control-sm" placeholder="street" name="street" value="{{ User.address.street }}">
+        </div>
+        <div class="form-group">
+            <label>locality</label>
+            <input type="text" class="form-control form-control-sm" placeholder="locality" name="locality" value="{{ User.address.locality }}">
+        </div>
+        <div class="form-group">
+            <label>city</label>
+            <input type="text" class="form-control form-control-sm" placeholder="city" name="city" value="{{ User.address.city }}" required>
+        </div>
+        <div class="form-group">
+            <label>state</label>
+            <input type="text" class="form-control form-control-sm" placeholder="state" name="state" value="{{ User.address.state }}" required>
+        </div>
+        <div class="form-group">
+            <label>pincode</label>
+            <input type="text" class="form-control form-control-sm" placeholder="pincode" name="pincode" value="{{ User.address.pincode }}" required>
+        </div>
+
+        <div class="form-group">
+            <label for='dob'>Rating(temporary)</label>
+            <input type="text" required name="rating" class="form-control form-control-sm" id='dob' placeholder="Rating" value="{{ User.rating }}">
+        </div>
+       
+      
+        <button type="submit" class="btn btn-sm btn-success btn-flat m-b-30 m-t-30">Submit</button>
+   
+    </form>
+</div>
+
+{% endblock content %}

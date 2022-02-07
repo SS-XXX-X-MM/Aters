@@ -1,0 +1,33 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+
+{% block title %} Restaurant Add Food {% endblock title %}
+
+{% block content %} 
+
+<form method="POST">
+    {% csrf_token %}
+    
+    <div class="mb-3">
+      <label for="exampleInputEmail1" class="form-label">Food Name</label>
+      <input type="text" class="form-control form-control-sm" id="exampleInputEmail1"
+        aria-describedby="emailHelp" placeholder="Item" name="food_name" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="exampleInputPassword1" class="form-label">Type</label>
+      <input type="text" class="form-control form-control-sm" id="exampleInputPassword1"
+        placeholder="Type" name="food_type" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="exampleInputPassword1" class="form-label">Price</label>
+        <input type="text" class="form-control form-control-sm" id="exampleInputPassword1"
+          placeholder="Type" name="food_price" required>
+      </div>
+
+    <button type="submit" class="btn btn-sm btn-success" id="loginbtn"><i class="fa fa-sign-in"></i> Add To Menu</button>
+   
+  </form>
+
+{% endblock content %}

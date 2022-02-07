@@ -6,6 +6,7 @@
 {% block content %}
 
 <h1>Orders</h1>
+<a href="{% url 'restaurant_home' %}" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">Home</a>
 
 <table class="table">
     <thead>
@@ -15,6 +16,7 @@
         <th scope="col">Food Name</th>
         <th scope="col">Price(INR)</th>
         <th scope="col">Address</th>
+        <th scope="col">Time</th>
       </tr>
     </thead>
     <tbody>
@@ -30,6 +32,7 @@
         {% else %}
             <td>{{order.customer.address.street}}, {{order.customer.address.locality}}, {{order.customer.address.city}}, {{order.customer.address.pincode}}</td>
         {% endif %}
+        <td> {{order.ordered_at}} </td>
       </tr>
       {% endfor %}
 

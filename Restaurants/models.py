@@ -21,13 +21,14 @@ class FoodItem(models.Model):
 class Menu(models.Model):
     menu_item = models.ManyToManyField(FoodItem, related_name='menu')
     # menu_item_price = models.IntegerField() # -- menu specific price +
+    # menu_item_rating
 
     def __str__(self):
         return "menu"
     
 
 class RestaurantProfile(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='restaurant_profile')
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='restaurantprofile')
     name = models.CharField(max_length=100)
     started_on = models.DateField()
     logo = models.ImageField(default="restaurant_logo/default-restaurant-logo.jpg", upload_to="restaurant_logo/")

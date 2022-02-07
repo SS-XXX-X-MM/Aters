@@ -16,6 +16,7 @@
         <th scope="col">Name</th>
         <th scope="col">Price(INR)</th>
         <th scope="col">Status</th>
+        <th scope="col">Time</th>
     </tr>
     </thead>
     <tbody>
@@ -26,6 +27,7 @@
         <td> {{order.restaurant.name}} </td>
         <td>{{order.menu_food_item}}</td>
         <td>{{order.menu_food_price}}</td>
+        <td>{{order.ordered_at}}</td>
         <td>On it's way</td>
     </tr>
     {% endfor %}

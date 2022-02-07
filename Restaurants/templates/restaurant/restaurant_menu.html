@@ -6,7 +6,8 @@
 {% block content %}
 
 <h1>Menu</h1>
-
+<a href="{% url 'restaurant_add_food' %}" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">Add Food Item</a>
+<a href="{% url 'restaurant_home' %}" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">Home</a>
 <table class="table">
     <thead>
       <tr>
